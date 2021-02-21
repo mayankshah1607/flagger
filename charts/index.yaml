@@ -27,6 +27,6 @@ entries:
     sources:
     - https://github.com/fluxcd/flagger
     urls:
-    - https://mayankshah1607.github.io/flagger/flagger-1.5.0.tgz
+    - https://mayankshah1607.github.io/flagger/charts/flagger-1.5.0.tgz
     version: 1.5.0
 generated: "2021-02-21T15:04:50.757394+05:30"
