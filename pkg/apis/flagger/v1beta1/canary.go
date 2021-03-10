@@ -314,6 +314,8 @@ const (
 	EventHook HookType = "event"
 	// RollbackHook rollback canary analysis if webhook returns HTTP 200
 	RollbackHook HookType = "rollback"
+	// ConfirmTrafficPromotionHook increases traffic weight if webhook returns HTTP 200
+	ConfirmTrafficPromotionHook = "confirm-traffic-promotion"
 )
 
 // CanaryWebhook holds the reference to external checks used for canary analysis

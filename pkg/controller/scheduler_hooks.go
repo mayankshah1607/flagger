@@ -23,6 +23,22 @@ import (
 	"github.com/fluxcd/flagger/pkg/canary"
 )
 
+func (c *Controller) runConfirmTrafficPromotionHooks(canary *flaggerv1.Canary) bool {
+	for _, webhook := range canary.GetAnalysis().Webhooks {
+		if webhook.Type == flaggerv1.ConfirmTrafficPromotionHook {
+			err := CallWebhook(canary.Name, canary.Namespace, flaggerv1.CanaryPhaseProgressing, webhook)
+			if err != nil {
+				c.recordEventWarningf(canary, "Halt %s.%s advancement waiting for traffic promotion approval %s",
+					canary.Name, canary.Namespace, webhook.Name)
+				c.alert(canary, "Canary traffic promotion is waiting for approval.", false, flaggerv1.SeverityWarn)
+				return false
+			}
+			c.recordEventInfof(canary, "Confirm-traffic-promotion check %s passed", webhook.Name)
+		}
+	}
+	return true
+}
+
 func (c *Controller) runConfirmRolloutHooks(canary *flaggerv1.Canary, canaryController canary.Controller) bool {
 	for _, webhook := range canary.GetAnalysis().Webhooks {
 		if webhook.Type == flaggerv1.ConfirmRolloutHook {
