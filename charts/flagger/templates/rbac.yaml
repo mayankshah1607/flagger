@@ -145,6 +145,19 @@ rules:
       - patch
       - delete
   - apiGroups:
+      - gateway.solo.io
+    resources:
+      - routetables
+      - routetables/finalizers
+    verbs:
+      - get
+      - list
+      - watch
+      - create
+      - update
+      - patch
+      - delete
+  - apiGroups:
       - gloo.solo.io
     resources:
       - upstreams
